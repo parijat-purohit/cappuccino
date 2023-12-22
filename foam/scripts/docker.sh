@@ -29,7 +29,7 @@ case "$1" in
         ;;
 
     *)
-        echo "Usage: $0 {build|up|down|restart|logs}"
+        echo "What do you want to do with docker?: $0 {build?|up?|down?|restart?|logs?}"
         exit 1
 esac
 
