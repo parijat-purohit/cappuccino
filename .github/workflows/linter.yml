@@ -1,4 +1,4 @@
-name: linter-CI
+name: linter CI
 on: [push, pull_request]
 jobs:
   linter_name:
