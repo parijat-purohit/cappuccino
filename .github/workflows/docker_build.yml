@@ -15,5 +15,5 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build ./ingredients --file ./ingredients/Dockerfile --tag my-image-name:$(date +%s)
+      run: docker build ./cappuccino --file ./cappuccino/Dockerfile --tag my-image-name:$(date +%s)
 
