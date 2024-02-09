@@ -58,13 +58,15 @@ REST_FRAMEWORK = {
         'user': '1000/day'
     },
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework_simplejwt.authentication.JWTStatelessUserAuthentication',
     ],
 }
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=10),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'SIGNING_KEY': os.environ.get("JWT_SIGNING_KEY"),
+    'TOKEN_OBTAIN_SERIALIZER': 'espresso.serializers.CustomTokenObtainPairSerializer',
 }
 
 MIDDLEWARE = [
