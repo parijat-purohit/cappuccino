@@ -8,6 +8,9 @@ services:
       - .:/app
     ports:
       - "8000:8000"
+    depends_on:
+      - db
+      - redis
 
   db:
     image: postgres:latest
@@ -18,5 +21,14 @@ services:
     volumes:
       - db-data:/var/lib/postgresql/data
 
+  redis:
+    image: redis:latest
+    restart: on-failure
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+
 volumes:
   db-data:
+  redis-data:
