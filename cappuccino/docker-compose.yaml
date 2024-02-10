@@ -29,6 +29,37 @@ services:
     volumes:
       - redis-data:/data
 
+  celery:
+    build: .
+    command: celery -A foam worker --loglevel=info
+    volumes:
+      - .:/app
+    depends_on:
+      - redis
+
+  celery-beat:
+    build: .
+    command: celery -A foam beat --scheduler django_celery_beat.schedulers:DatabaseScheduler --loglevel=info
+    volumes:
+      - .:/app
+    depends_on:
+      - redis
+
+  flower:
+    image: mher/flower
+    environment:
+      CELERY_BROKER_URL: ${CELERY_BROKER_URL}
+      FLOWER_PORT: "5555"
+    ports:
+      - "5555:5555"
+    command: celery flower --port=5555
+    volumes:
+      - flower_data:/data
+    depends_on:
+      - redis
+      - celery
+
 volumes:
   db-data:
   redis-data:
+  flower_data:
