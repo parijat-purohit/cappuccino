@@ -8,6 +8,9 @@ services:
       - .:/app
     ports:
       - "8000:8000"
+    depends_on:
+      - db
+      - redis
 
   db:
     image: postgres:latest
@@ -18,5 +21,45 @@ services:
     volumes:
       - db-data:/var/lib/postgresql/data
 
+  redis:
+    image: redis:latest
+    restart: on-failure
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+
+  celery:
+    build: .
+    command: celery -A foam worker --loglevel=info
+    volumes:
+      - .:/app
+    depends_on:
+      - redis
+
+  celery-beat:
+    build: .
+    command: celery -A foam beat --scheduler django_celery_beat.schedulers:DatabaseScheduler --loglevel=info
+    volumes:
+      - .:/app
+    depends_on:
+      - redis
+
+  flower:
+    image: mher/flower
+    environment:
+      CELERY_BROKER_URL: ${CELERY_BROKER_URL}
+      FLOWER_PORT: "5555"
+    ports:
+      - "5555:5555"
+    command: celery flower --port=5555
+    volumes:
+      - flower_data:/data
+    depends_on:
+      - redis
+      - celery
+
 volumes:
   db-data:
+  redis-data:
+  flower_data:
