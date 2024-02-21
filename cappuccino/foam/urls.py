@@ -7,4 +7,5 @@ urlpatterns = [
     re_path(r'^', include('espresso.urls')),
     re_path(r'^token/$', jwt_views.TokenObtainPairView.as_view()),
     re_path(r'^token/refresh/$', jwt_views.TokenRefreshView.as_view()),
+    re_path(r'^sweetener/', include('sweetener.urls')),
 ]
