@@ -55,5 +55,8 @@ class Query(graphene.ObjectType):
     def resolve_getTrapezoid(self, info, base1, base2, height):
         return QueryResolver.getTrapezoid(base1, base2, height)
 
+    # TODO
+    # More shapes would be included
+
 
 schema = graphene.Schema(query=Query)
