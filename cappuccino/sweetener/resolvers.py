@@ -16,3 +16,13 @@ class QueryResolver:
     def getTriangle(base, height):
         # Resolver function for calculating the area of a triangle
         return 0.5 * base * height
+
+    @staticmethod
+    def getSquare(side):
+        # Resolver function for calculating the area of a square
+        return side * side
+
+    @staticmethod
+    def getTrapezoid(base1, base2, height):
+        # Resolver function for calculating the area of a trapezoid
+        return 0.5 * (base1 + base2) * height
