@@ -57,6 +57,7 @@ class Query(graphene.ObjectType):
 
     # TODO
     # More shapes would be included
+    # This is to test the GraphQL
 
 
 schema = graphene.Schema(query=Query)
