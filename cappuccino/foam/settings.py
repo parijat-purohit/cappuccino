@@ -46,10 +46,12 @@ INSTALLED_APPS = [
     "espresso",
     "sweetener",
     "foam",
+    "sugar",
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
     "django_celery_beat",
     "flower",
+    "django_countries",
     "graphene_django",
 ]
 
