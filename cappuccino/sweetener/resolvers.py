@@ -1,4 +1,5 @@
 import graphene
+from sweetener.models import Author, Book
 
 
 class QueryResolver:
@@ -26,3 +27,13 @@ class QueryResolver:
     def getTrapezoid(base1, base2, height):
         # Resolver function for calculating the area of a trapezoid
         return 0.5 * (base1 + base2) * height
+
+    @staticmethod
+    def Authors():
+        # Your logic to fetch and potentially filter authors
+        return Author.objects.all()
+
+    @staticmethod
+    def Books():
+        # Your logic to fetch and potentially filter books
+        return Book.objects.all()

@@ -1,5 +1,7 @@
 import graphene
+from graphene_django import DjangoObjectType
 from sweetener.resolvers import QueryResolver
+from sweetener.models import Author, Book
 """
 Sample Query:
 
@@ -25,7 +27,24 @@ Sample Output:
 """
 
 
+class AuthorType(DjangoObjectType):
+    class Meta:
+        model = Author
+
+
+class BookType(DjangoObjectType):
+    class Meta:
+        model = Book
+
+
 class Query(graphene.ObjectType):
+    allAuthors = graphene.List(AuthorType)
+    allBooks = graphene.List(BookType)
+    authorbyNname = graphene.Field(
+        AuthorType, name=graphene.String(required=True))
+    bookbyAuthor = graphene.List(
+        BookType, author_id=graphene.Int(required=True))
+
     getCircle = graphene.Float(radius=graphene.Float())
     getRectangle = graphene.Float(
         width=graphene.Float(), height=graphene.Float())
@@ -39,6 +58,21 @@ class Query(graphene.ObjectType):
         base2=graphene.Float(),
         height=graphene.Float()
     )
+
+    def resolve_allBooks(self, info):
+        return Book.objects.all()
+
+    def resolve_allAuthors(self, info):
+        return Author.objects.all()
+
+    def resolve_authorbyName(self, info, name):
+        try:
+            return Author.objects.get(name=name)
+        except:
+            return None
+
+    def resolve_booksbyAuthor(self, info, author_id):
+        return Book.objects.filter(author_id=author_id)
 
     def resolve_getCircle(self, info, radius):
         return QueryResolver.getCircle(radius)
