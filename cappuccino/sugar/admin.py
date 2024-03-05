@@ -5,6 +5,7 @@ from sugar.models import Food, Country
 
 class FoodAdmin(admin.ModelAdmin):
     search_fields = ['origin']
+    raw_id_fields = ['origin']
 
 
 class CountryAdmin(admin.ModelAdmin):
